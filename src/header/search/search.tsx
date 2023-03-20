@@ -12,9 +12,22 @@ class SearchBar extends React.Component<unknown, { inputValue: string }> {
 
     handleInput = (e: { target: HTMLInputElement }): void => {
         const target: HTMLInputElement = e.target as HTMLInputElement;
-        localStorage.setItem('inputValue', JSON.stringify(target.value));
         this.setState({ inputValue: target.value });
     };
+
+    saveToLocalStore = (): void => {
+        const { inputValue } = this.state;
+        localStorage.setItem('inputValue', JSON.stringify(inputValue));
+    };
+
+    componentDidMount(): void {
+        window.addEventListener('beforeunload', this.saveToLocalStore);
+    }
+
+    componentWillUnmount(): void {
+        this.saveToLocalStore();
+        window.removeEventListener('beforeunload', this.saveToLocalStore);
+    }
 
     render() {
         return (
@@ -24,6 +37,9 @@ class SearchBar extends React.Component<unknown, { inputValue: string }> {
     type="search"
     onChange={this.handleInput}
     value={this.state.inputValue}
+    style={{
+        margin: '20px',
+    }}
     />
         );
     }

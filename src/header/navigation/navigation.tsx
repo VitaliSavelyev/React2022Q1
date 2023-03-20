@@ -1,4 +1,5 @@
 import React from 'react';
+import {NavLink} from "react-router-dom";
 
 const Navigation = () => {
     return (
@@ -8,12 +9,22 @@ const Navigation = () => {
             width: '150px',
             justifyContent: 'space-around'
         }}>
-            <a href="/">
+            <NavLink  to="/"
+                      style={({ isActive }) => {
+                          return {
+                              color: isActive ? "red" : "black",
+                          };
+                      }}>
                 <li>Home!!!</li>
-            </a>
-            <a href="/about">
+            </NavLink>
+            <NavLink to="/about"
+                     style={({ isActive }) => {
+                         return {
+                             color: isActive ? "red" : "black",
+                         };
+                     }}>
                 <li>About!!!</li>
-            </a>
+            </NavLink>
         </ul>
     );
 };

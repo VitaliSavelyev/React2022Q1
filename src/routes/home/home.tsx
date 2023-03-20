@@ -1,6 +1,7 @@
 import { ICard } from 'interfaces/card.interface';
 import React from 'react';
 import Card from "./Card/card";
+import SearchBar from "../../header/search/search";
 
 const cards = [
     { id: '1', name: 'Vitali', surname: 'Savelyev', city: 'Minsk'},
@@ -13,16 +14,19 @@ const cards = [
 
 const Home = () => {
     return (
-        <main style={{
-            display: 'flex',
-            padding: '20px',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            border: '1px solid red'
-        }}>
-            {cards.map((card: ICard) => (
-                <Card key={card.id} card={card}/>
-            ))}
+        <main >
+            <SearchBar/>
+            <div style={{
+                display: 'flex',
+                padding: '20px',
+                justifyContent: 'space-between',
+                flexWrap: 'wrap',
+                border: '1px solid red'
+            }}>
+                {cards.map((card: ICard) => (
+                    <Card key={card.id} card={card}/>
+                ))}
+            </div>
         </main>
     );
 };

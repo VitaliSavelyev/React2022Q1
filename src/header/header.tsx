@@ -1,6 +1,5 @@
 import React from 'react';
 import Navigation from './navigation/navigation';
-import SearchBar from "./search/search";
 
 const Header = () => {
     return (
@@ -13,7 +12,6 @@ const Header = () => {
             border: '1px solid green'
         }}>
             <Navigation/>
-            <SearchBar/>
         </header>
     );
 };
