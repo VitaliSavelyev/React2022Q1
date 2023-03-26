@@ -1,16 +1,22 @@
-import { ICard } from "interfaces/card.interface";
+import { IUser } from "interfaces/user.interface";
 import React from "react";
 import Card from "./Card/card";
 import SearchBar from "../../header/search/search";
+import {CountryEnum} from "../../enums/country.enum";
+import { GenderEnum } from "../../enums/gender.enum";
 
-const cards = [
-  { id: "1", name: "Vitali", surname: "Savelyev", city: "Minsk" },
-  { id: "2", name: "Vitali", surname: "Savelyev", city: "Minsk" },
-  { id: "3", name: "Vitali", surname: "Savelyev", city: "Minsk" },
-  { id: "4", name: "Vitali", surname: "Savelyev", city: "Minsk" },
-  { id: "5", name: "Vitali", surname: "Savelyev", city: "Minsk" },
-  { id: "6", name: "Vitali", surname: "Savelyev", city: "Minsk" },
-];
+const users: IUser[] = [
+    {
+        id: "1",
+        name: "Vitali",
+        surname: "Savelyev",
+        birthday: "12.12.2012",
+        country: CountryEnum.BELARUS,
+        married: true,
+        gender: GenderEnum.MALE,
+        photo: ''
+    },
+]
 
 const Home = () => {
   return (
@@ -25,7 +31,7 @@ const Home = () => {
           border: "1px solid red",
         }}
       >
-        {cards.map((card: ICard) => (
+        {users.map((card: IUser) => (
           <Card key={card.id} card={card} />
         ))}
       </div>

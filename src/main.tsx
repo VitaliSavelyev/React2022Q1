@@ -5,6 +5,7 @@ import About from "./routes/about/about";
 import NotFound from "./routes/notfound/notFound";
 import Home from "./routes/home/home";
 import Header from "./header/header";
+import UserForm from "./routes/forms/forms";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -13,6 +14,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/form" element={<UserForm />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
