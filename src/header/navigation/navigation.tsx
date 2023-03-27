@@ -31,16 +31,16 @@ const Navigation = () => {
       >
         About!!!
       </NavLink>
-        <NavLink
-            to="/form"
-            style={({ isActive }) => {
-                return {
-                    color: isActive ? "red" : "black",
-                };
-            }}
-        >
-            Form!!!
-        </NavLink>
+      <NavLink
+        to="/form"
+        style={({ isActive }) => {
+          return {
+            color: isActive ? "red" : "black",
+          };
+        }}
+      >
+        Form!!!
+      </NavLink>
     </ul>
   );
 };

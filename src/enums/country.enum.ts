@@ -1,5 +1,5 @@
 export enum CountryEnum {
-    BELARUS = 'belarus',
-    CHINA = 'china',
-    BRASIL = 'brasil'
+  BELARUS = "belarus",
+  CHINA = "china",
+  BRASIL = "brasil",
 }

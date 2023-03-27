@@ -12,7 +12,7 @@ const Home = () => {
         style={{
           display: "flex",
           padding: "20px",
-            gap: "10px",
+          gap: "10px",
           flexWrap: "wrap",
           border: "1px solid red",
         }}
