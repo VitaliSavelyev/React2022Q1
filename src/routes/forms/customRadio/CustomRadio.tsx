@@ -1,5 +1,5 @@
+import { FormControlRadio } from "interfaces/form.interface";
 import React from "react";
-import { FormControlRadio } from "../forms";
 
 function isInvalid(control: FormControlRadio) {
   return !control.valid && !!control?.validation;

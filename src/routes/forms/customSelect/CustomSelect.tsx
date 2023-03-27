@@ -1,6 +1,6 @@
 import React from "react";
-import { FormControlSelect } from "../forms";
 import { CountryEnum } from "enums/country.enum";
+import { FormControlSelect } from "interfaces/form.interface";
 
 class Input extends React.Component<{ formControl: FormControlSelect }> {
   public htmlFor: string;

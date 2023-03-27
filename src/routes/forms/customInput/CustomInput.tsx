@@ -1,5 +1,5 @@
+import { FormControlInput } from "interfaces/form.interface";
 import React from "react";
-import { FormControlInput } from "../forms";
 
 function isInvalid(control: FormControlInput) {
   return !control.valid && !!control?.validation;
