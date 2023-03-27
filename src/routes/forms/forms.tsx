@@ -5,6 +5,7 @@ import CustomRadio from "./customRadio/CustomRadio";
 import {IUser} from "../../interfaces/user.interface";
 import {CountryEnum} from "../../enums/country.enum";
 import {GenderEnum} from "../../enums/gender.enum";
+import {users} from "../../db/dbusers";
 
 export interface FormControlRadio {
     ref: React.RefObject<HTMLInputElement>[];
@@ -217,7 +218,8 @@ class UserForm extends React.Component<unknown, { formState: IForm }> {
         const isInvalidForm = Object.values(updatedState).some(control => !control.valid)
         if(!isInvalidForm){
             user.id =`${Math.random()*10000}`
-
+            users.push(user)
+            this.setState({formState: updatedState})
         } else {
             this.setState({formState: updatedState})
         }
