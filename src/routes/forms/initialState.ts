@@ -1,7 +1,7 @@
+import { IForm } from "interfaces/form.interface";
 import React from "react";
 import { CountryEnum } from "../../enums/country.enum";
 import { GenderEnum } from "../../enums/gender.enum";
-import { IForm } from "./forms";
 
 export const initialState: IForm = {
   name: {
@@ -45,12 +45,16 @@ export const initialState: IForm = {
       required: true,
     },
     errorMessage: "Your country does not choose",
-    valid: false,
+    valid: true,
   },
   married: {
     ref: React.createRef(),
     type: "checkbox",
     label: "I am married",
+    validation: {
+      required: true,
+    },
+    errorMessage: "Sorry, but you married",
     valid: true,
   },
   gender: {

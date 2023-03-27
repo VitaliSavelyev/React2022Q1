@@ -66,7 +66,9 @@ class UserForm extends React.Component<
       if (!!value[1]?.validation) {
         updatedState[keyValue].valid = validate(
           value[1]?.validation,
-          value[1].ref?.current?.value
+          keyValue !== "married"
+            ? value[1].ref?.current?.value
+            : value[1].ref?.current?.checked
         );
       }
       switch (keyValue) {
