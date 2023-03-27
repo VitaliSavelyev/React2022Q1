@@ -6,6 +6,8 @@ import { IUser } from "../../interfaces/user.interface";
 import { CountryEnum } from "../../enums/country.enum";
 import { GenderEnum } from "../../enums/gender.enum";
 import { users } from "../../db/dbusers";
+import Card from "../home/Card/card";
+import {initialState} from "./initialState";
 
 export interface FormControlRadio {
   ref: React.RefObject<HTMLInputElement>[];
@@ -40,6 +42,8 @@ export interface ValidationControl {
   firstLetter?: boolean;
 }
 
+export type ItemFormType = 'name' | 'surname' | 'birthday' | 'country' | 'gender' | 'married' | 'photo';
+
 export interface IForm {
   name: FormControlInput;
   surname: FormControlInput;
@@ -69,80 +73,13 @@ function validate(
 }
 
 class UserForm extends React.Component<unknown, { formState: IForm }> {
+
+  public formRef: React.RefObject<HTMLFormElement>;
   constructor(props: unknown) {
     super(props);
+    this.formRef = React.createRef();
     this.state = {
-      formState: {
-        name: {
-          ref: React.createRef(),
-          type: "text",
-          label: "Name",
-          validation: {
-            required: true,
-            firstLetter: true,
-          },
-          errorMessage: "Your name invalid",
-          valid: true,
-        },
-        surname: {
-          ref: React.createRef(),
-          type: "text",
-          label: "Surname",
-          validation: {
-            required: true,
-            firstLetter: true,
-          },
-          errorMessage: "Your name invalid",
-          valid: true,
-        },
-        birthday: {
-          ref: React.createRef(),
-          type: "date",
-          label: "Birthday",
-          validation: {
-            required: true,
-          },
-          errorMessage: "Your date invalid",
-          valid: true,
-        },
-        country: {
-          ref: React.createRef(),
-          type: "select",
-          label: "country",
-          options: [CountryEnum.BELARUS, CountryEnum.CHINA, CountryEnum.BRASIL],
-          validation: {
-            required: true,
-          },
-          errorMessage: "Your country does not choose",
-          valid: false,
-        },
-        married: {
-          ref: React.createRef(),
-          type: "checkbox",
-          label: "I am married",
-          valid: true,
-        },
-        gender: {
-          ref: [React.createRef(), React.createRef()],
-          type: "radio",
-          label: [GenderEnum.MALE, GenderEnum.FEMALE],
-          validation: {
-            required: true,
-          },
-          errorMessage: "Your gender does not choose",
-          valid: true,
-        },
-        photo: {
-          ref: React.createRef(),
-          type: "file",
-          label: "Profile Picture",
-          validation: {
-            required: true,
-          },
-          errorMessage: "Your photo invalid",
-          valid: true,
-        },
-      },
+      formState: {...initialState},
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -161,74 +98,33 @@ class UserForm extends React.Component<unknown, { formState: IForm }> {
     };
     const updatedState = { ...this.state.formState };
     Object.entries(this.state.formState).forEach((value) => {
-      switch (value[0]) {
+      const keyValue: ItemFormType = value[0] as ItemFormType;
+      if (!!value[1]?.validation) {
+        updatedState[keyValue].valid = validate(
+            value[1]?.validation,
+            value[1].ref?.current?.value
+        );
+      }
+      switch (keyValue) {
         case "name":
-          {
-            if (!!value[1]?.validation) {
-              updatedState[value[0]].valid = validate(
-                value[1]?.validation,
-                value[1].ref?.current?.value
-              );
-            }
-            user[value[0]] = value[1].ref?.current?.value;
-          }
+            user[keyValue] = value[1].ref?.current?.value;
           break;
         case "surname":
-          {
-            if (!!value[1]?.validation) {
-              updatedState[value[0]].valid = validate(
-                value[1]?.validation,
-                value[1].ref?.current?.value
-              );
-            }
-            user[value[0]] = value[1].ref?.current?.value;
-          }
+            user[keyValue] = value[1].ref?.current?.value;
           break;
         case "birthday":
-          {
-            if (!!value[1]?.validation) {
-              updatedState[value[0]].valid = validate(
-                value[1]?.validation,
-                value[1].ref?.current?.value
-              );
-            }
-            user[value[0]] = value[1].ref?.current?.value;
-          }
+            user[keyValue] = value[1].ref?.current?.value;
           break;
         case "country":
-          {
-            if (!!value[1]?.validation) {
-              updatedState[value[0]].valid = validate(
-                value[1]?.validation,
-                value[1].ref?.current?.value
-              );
-            }
-            user[value[0]] = value[1].ref?.current?.value;
-          }
+            user[keyValue] = value[1].ref?.current?.value;
           break;
         case "married":
-          {
-            if (!!value[1]?.validation) {
-              updatedState[value[0]].valid = validate(
-                value[1]?.validation,
-                value[1].ref?.current?.checked
-              );
-            }
-            user[value[0]] = value[1].ref?.current?.checked;
-          }
+            user[keyValue] = value[1].ref?.current?.checked;
           break;
         case "photo":
-          {
-            if (!!value[1]?.validation) {
-              updatedState[value[0]].valid = validate(
-                value[1]?.validation,
-                value[1].ref?.current?.value
-              );
-            }
-            user[value[0]] = value[1].ref?.current?.files[0]
+            user[keyValue] = value[1].ref?.current?.files[0]
               ? URL.createObjectURL(value[1].ref?.current?.files[0])
               : "";
-          }
           break;
       }
     });
@@ -252,7 +148,8 @@ class UserForm extends React.Component<unknown, { formState: IForm }> {
     if (!isInvalidForm) {
       user.id = `${Math.random() * 10000}`;
       users.push(user);
-      this.setState({ formState: updatedState });
+      this.setState({ formState: {...initialState} });
+      this.formRef?.current?.reset()
     } else {
       this.setState({ formState: updatedState });
     }
@@ -260,74 +157,87 @@ class UserForm extends React.Component<unknown, { formState: IForm }> {
 
   render() {
     return (
-      <div
-        style={{
+      <div>
+        <div         style={{
           display: "flex",
           padding: "20px",
           justifyContent: "space-between",
           flexWrap: "wrap",
           border: "1px solid red",
-        }}
-      >
-        <form onSubmit={this.handleSubmit}>
-          <div
-            style={{
-              margin: "30px",
-            }}
-          >
-            <CustomInput formControl={this.state.formState.name} />
-          </div>
+        }}>
+          <form ref={this.formRef} onSubmit={this.handleSubmit}>
+            <div
+                style={{
+                  margin: "30px",
+                }}
+            >
+              <CustomInput formControl={this.state.formState.name} />
+            </div>
 
-          <div
-            style={{
-              margin: "30px",
-            }}
-          >
-            <CustomInput formControl={this.state.formState.surname} />
-          </div>
+            <div
+                style={{
+                  margin: "30px",
+                }}
+            >
+              <CustomInput formControl={this.state.formState.surname} />
+            </div>
 
-          <div
-            style={{
-              margin: "30px",
-            }}
-          >
-            <CustomInput formControl={this.state.formState.birthday} />
-          </div>
+            <div
+                style={{
+                  margin: "30px",
+                }}
+            >
+              <CustomInput formControl={this.state.formState.birthday} />
+            </div>
 
-          <div
-            style={{
-              margin: "30px",
-            }}
-          >
-            <CustomSelect formControl={this.state.formState.country} />
-          </div>
+            <div
+                style={{
+                  margin: "30px",
+                }}
+            >
+              <CustomSelect formControl={this.state.formState.country} />
+            </div>
 
-          <div
-            style={{
-              margin: "30px",
-            }}
-          >
-            <CustomRadio formControl={this.state.formState.gender} />
-          </div>
+            <div
+                style={{
+                  margin: "30px",
+                }}
+            >
+              <CustomRadio formControl={this.state.formState.gender} />
+            </div>
 
-          <div
-            style={{
-              margin: "30px",
-            }}
-          >
-            <CustomInput formControl={this.state.formState.married} />
-          </div>
+            <div
+                style={{
+                  margin: "30px",
+                }}
+            >
+              <CustomInput formControl={this.state.formState.married} />
+            </div>
 
-          <div
-            style={{
-              margin: "30px",
-            }}
-          >
-            <CustomInput formControl={this.state.formState.photo} />
-          </div>
+            <div
+                style={{
+                  margin: "30px",
+                }}
+            >
+              <CustomInput formControl={this.state.formState.photo} />
+            </div>
 
-          <button type="submit">Submit</button>
-        </form>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <div
+            style={{
+              display: "flex",
+              padding: "20px",
+              gap: "10px",
+              flexWrap: "wrap",
+              border: "1px solid red",
+            }}
+        >
+          {users.map((card: IUser) => (
+              <Card key={card.id} card={card} />
+          ))}
+        </div>
       </div>
     );
   }
