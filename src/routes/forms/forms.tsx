@@ -37,6 +37,7 @@ class UserForm extends React.Component<
   { formState: IForm; isHasPopup: boolean }
 > {
   public formRef: React.RefObject<HTMLFormElement>;
+
   constructor(props: unknown) {
     super(props);
     this.formRef = React.createRef();
