@@ -1,42 +1,41 @@
-import { FormControlInput } from "interfaces/form.interface";
-import React from "react";
+import {FormControlInput} from "interfaces/form.interface";
+import React, {useCallback, useEffect, useRef, useState} from "react";
+import {useController} from "react-hook-form";
 
-function isInvalid(control: FormControlInput) {
-  return !control.valid && !!control?.validation;
-}
-
-class Input extends React.Component<{ formControl: FormControlInput }> {
-  public htmlFor: string;
-
-  constructor(props: { formControl: FormControlInput }) {
-    super(props);
-    this.htmlFor = `${this.props.formControl.type}-${Math.random()}`;
-  }
-
-  render() {
+const CustomInput = (props: any) => {
+    const controlState = {control: props.control, name: props.name, rules: {...props.formControl?.validation}}
+    const {field, fieldState} = useController(controlState);
+    const htmlFor = `${props.formControl.type}-${Math.random()}`
     return (
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          width: "250px",
-        }}
-      >
-        <label
-          htmlFor={this.htmlFor}
-        >{`${this.props.formControl.label}:`}</label>
-        <input
-          accept={this.props.formControl.type === "file" ? "image/*" : ""}
-          type={this.props.formControl.type}
-          id={this.htmlFor}
-          ref={this.props.formControl.ref}
-        />
-        {isInvalid(this.props.formControl) ? (
-          <div>{this.props.formControl.errorMessage || ""}</div>
-        ) : null}
-      </div>
+        <div
+            style={{
+                display: "flex",
+                flexWrap: "wrap",
+                width: "250px",
+                margin: "30px"
+            }}
+        >
+            <label
+                htmlFor={htmlFor}
+            >{`${props.formControl.label}:`}</label>
+            {props.formControl.type !== 'file' ? (
+                <input
+                    {...field} placeholder={props.formControl.name}
+                    type={props.formControl.type}
+                    id={htmlFor}
+                />
+            ) : <input
+                {...field} placeholder={props.formControl.name}
+                accept="image/*"
+                type={props.formControl.type}
+                id={htmlFor}
+            />}
+
+            {fieldState.invalid ? (
+                <div>{props.formControl.errorMessage || ""}</div>
+            ) : null}
+        </div>
     );
-  }
 }
 
-export default Input;
+export default CustomInput;

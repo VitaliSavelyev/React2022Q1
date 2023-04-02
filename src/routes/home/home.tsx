@@ -1,7 +1,7 @@
 import { IUser } from "interfaces/user.interface";
 import React from "react";
 import Card from "./Card/card";
-import SearchBar from "../../header/search/search";
+import SearchBar from "./search/search";
 import { users } from "../../db/dbusers";
 
 const Home = () => {

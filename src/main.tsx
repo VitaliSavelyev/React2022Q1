@@ -1,22 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import About from "./routes/about/about";
-import NotFound from "./routes/notfound/notFound";
-import Home from "./routes/home/home";
-import Header from "./header/header";
-import UserForm from "./routes/forms/forms";
+import { BrowserRouter } from "react-router-dom";
+import App from "./app";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/form" element={<UserForm />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+        <App />
     </BrowserRouter>
   </React.StrictMode>
 );

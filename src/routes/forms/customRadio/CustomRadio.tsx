@@ -1,53 +1,42 @@
-import { FormControlRadio } from "interfaces/form.interface";
+import {FormControlRadio} from "interfaces/form.interface";
 import React from "react";
+import {useController} from "react-hook-form";
 
-function isInvalid(control: FormControlRadio) {
-  return !control.valid && !!control?.validation;
-}
-
-class Input extends React.Component<{ formControl: FormControlRadio }> {
-  public htmlFor: string;
-
-  constructor(props: { formControl: FormControlRadio }) {
-    super(props);
-    this.htmlFor = `${this.props.formControl.type}-${Math.random()}`;
-  }
-
-  render() {
+const CustomRadio = (props: any) => {
+    const controlState = {control: props.control, name: props.name, rules: {...props.formControl?.validation}}
+    const {field, fieldState} = useController(controlState);
     return (
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          width: "250px",
-        }}
-      >
-        <label>Gender:</label>
-        <input
-          type="radio"
-          id="male"
-          name="gender"
-          value="male"
-          className="radio-input"
-          ref={this.props.formControl.ref[0]}
-        />
-        <label htmlFor="male">{this.props.formControl.label[0]}</label>
+        <div
+            style={{
+                display: "flex",
+                flexWrap: "wrap",
+                width: "250px",
+                margin: "30px"
+            }}
+        >
+            <label>Gender:</label>
+            <input
+                {...field}
+                type={props.formControl.type}
+                id={props.formControl.label[0]}
+                name="gender"
+                value={props.formControl.label[0]}
+            />
+            <label htmlFor={props.formControl.label[0]}>{props.formControl.label[0]}</label>
 
-        <input
-          type="radio"
-          id="female"
-          name="gender"
-          value="female"
-          className="radio-input"
-          ref={this.props.formControl.ref[1]}
-        />
-        <label htmlFor="female">{this.props.formControl.label[1]}</label>
-        {isInvalid(this.props.formControl) ? (
-          <span>{this.props.formControl.errorMessage || ""}</span>
-        ) : null}
-      </div>
-    );
-  }
+            <input
+                {...field}
+                type={props.formControl.type}
+                id={props.formControl.label[1]}
+                name="gender"
+                value={props.formControl.label[1]}
+            />
+            <label htmlFor={props.formControl.label[1]}>{props.formControl.label[1]}</label>
+            {fieldState.invalid ? (
+                <span>{props.formControl.errorMessage || ""}</span>
+            ) : null}
+        </div>
+    )
 }
 
-export default Input;
+export default CustomRadio;

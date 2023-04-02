@@ -1,33 +1,34 @@
 import { IForm } from "interfaces/form.interface";
-import React from "react";
 import { CountryEnum } from "../../enums/country.enum";
 import { GenderEnum } from "../../enums/gender.enum";
+const firstLetterValidator = (value: string): boolean => /[A-Z]/.test(value[0]);
 
 export const initialState: IForm = {
   name: {
-    ref: React.createRef(),
     type: "text",
     label: "Name",
     validation: {
       required: true,
-      firstLetter: true,
+      validate: {
+        firstLetter: firstLetterValidator,
+      }
     },
     errorMessage: "Your name invalid",
     valid: true,
   },
   surname: {
-    ref: React.createRef(),
     type: "text",
     label: "Surname",
     validation: {
       required: true,
-      firstLetter: true,
+      validate: {
+        firstLetter: firstLetterValidator,
+      }
     },
     errorMessage: "Your name invalid",
     valid: true,
   },
   birthday: {
-    ref: React.createRef(),
     type: "date",
     label: "Birthday",
     validation: {
@@ -37,9 +38,8 @@ export const initialState: IForm = {
     valid: true,
   },
   country: {
-    ref: React.createRef(),
     type: "select",
-    label: "country",
+    label: "Country",
     options: [CountryEnum.BELARUS, CountryEnum.CHINA, CountryEnum.BRASIL],
     validation: {
       required: true,
@@ -48,7 +48,6 @@ export const initialState: IForm = {
     valid: true,
   },
   married: {
-    ref: React.createRef(),
     type: "checkbox",
     label: "I am married",
     validation: {
@@ -58,7 +57,6 @@ export const initialState: IForm = {
     valid: true,
   },
   gender: {
-    ref: [React.createRef(), React.createRef()],
     type: "radio",
     label: [GenderEnum.MALE, GenderEnum.FEMALE],
     validation: {
@@ -68,7 +66,6 @@ export const initialState: IForm = {
     valid: true,
   },
   photo: {
-    ref: React.createRef(),
     type: "file",
     label: "Profile Picture",
     validation: {

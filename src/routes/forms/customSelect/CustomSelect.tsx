@@ -1,21 +1,22 @@
 import React from "react";
 import { CountryEnum } from "enums/country.enum";
 import { FormControlSelect } from "interfaces/form.interface";
+import {useController} from "react-hook-form";
 
-class Input extends React.Component<{ formControl: FormControlSelect }> {
-  public htmlFor: string;
-
-  constructor(props: { formControl: FormControlSelect }) {
-    super(props);
-    this.htmlFor = `${this.props.formControl.type}-${Math.random()}`;
-  }
-
-  render() {
+const CustomSelect = (props: any) =>  {
+    const controlState = {control: props.control, name: props.name, rules: {...props.formControl?.validation} }
+    const { field, fieldState } = useController(controlState);
+    const htmlFor = `${props.formControl.type}-${Math.random()}`
     return (
-      <div>
-        <label htmlFor={this.htmlFor}>{this.props.formControl.label}</label>
-        <select id={this.htmlFor} ref={this.props.formControl.ref}>
-          {this.props.formControl.options.map(
+      <div             style={{
+          display: "flex",
+          flexWrap: "wrap",
+          width: "250px",
+          margin: "30px"
+      }}>
+        <label htmlFor={htmlFor}>{`${props.formControl.label}:`}</label>
+        <select {...field} id={htmlFor}>
+          {props.formControl.options.map(
             (label: CountryEnum, index: number) => {
               return (
                 <option value={label} key={label + index}>
@@ -27,7 +28,6 @@ class Input extends React.Component<{ formControl: FormControlSelect }> {
         </select>
       </div>
     );
-  }
 }
 
-export default Input;
+export default CustomSelect;

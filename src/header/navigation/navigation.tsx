@@ -1,3 +1,5 @@
+import { listLinks } from "../../constants/constant";
+import { ILink } from "interfaces/link.interface";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -11,36 +13,19 @@ const Navigation = () => {
         justifyContent: "space-around",
       }}
     >
-      <NavLink
-        to="/"
-        style={({ isActive }) => {
-          return {
-            color: isActive ? "red" : "black",
-          };
-        }}
-      >
-        Home!!!
-      </NavLink>
-      <NavLink
-        to="/about"
-        style={({ isActive }) => {
-          return {
-            color: isActive ? "red" : "black",
-          };
-        }}
-      >
-        About!!!
-      </NavLink>
-      <NavLink
-        to="/form"
-        style={({ isActive }) => {
-          return {
-            color: isActive ? "red" : "black",
-          };
-        }}
-      >
-        Form!!!
-      </NavLink>
+        {listLinks.map((link: ILink) => (
+            <NavLink
+                key={link.to}
+          to={link.to}
+          style={({ isActive }) => {
+            return {
+              color: isActive ? "red" : "black",
+            };
+          }}
+        >
+                {link.link}
+                </NavLink>
+        ))}
     </ul>
   );
 };

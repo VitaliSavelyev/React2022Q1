@@ -10,34 +10,26 @@ interface FormControl {
 }
 
 export interface FormControlRadio extends FormControl {
-  ref: React.RefObject<HTMLInputElement>[];
   label: GenderEnum[];
 }
 
 export interface FormControlSelect extends FormControl {
-  ref: React.RefObject<HTMLSelectElement>;
   label: string;
   options: CountryEnum[];
 }
 
 export interface FormControlInput extends FormControl {
-  ref: React.RefObject<HTMLInputElement>;
   label: string;
 }
 
 export interface ValidationControl {
   required: boolean;
-  firstLetter?: boolean;
+  validate?: CustomValidate;
 }
 
-export type ItemFormType =
-  | "name"
-  | "surname"
-  | "birthday"
-  | "country"
-  | "gender"
-  | "married"
-  | "photo";
+export interface CustomValidate {
+  firstLetter?: (type: string) => boolean
+}
 
 export interface IForm {
   name: FormControlInput;
