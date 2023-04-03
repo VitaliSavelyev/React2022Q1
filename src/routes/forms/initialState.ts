@@ -40,7 +40,7 @@ export const initialState: IForm = {
   country: {
     type: "select",
     label: "Country",
-    options: [CountryEnum.BELARUS, CountryEnum.CHINA, CountryEnum.BRASIL],
+    options: [CountryEnum.EMPTY, CountryEnum.BELARUS, CountryEnum.CHINA, CountryEnum.BRASIL],
     validation: {
       required: true,
     },
