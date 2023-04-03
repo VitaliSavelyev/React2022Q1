@@ -6,7 +6,7 @@ import { users } from "../../db/dbusers";
 
 const Home = () => {
   return (
-    <main>
+    <main data-testid="home">
       <SearchBar />
       <div
         style={{
