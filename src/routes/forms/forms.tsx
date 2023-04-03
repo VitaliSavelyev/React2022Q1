@@ -5,6 +5,7 @@ import { users } from "../../db/dbusers";
 import Card from "../home/Card/card";
 import { initialState } from "./initialState";
 import { FieldValues, useForm } from "react-hook-form";
+const firstLetterValidator = (value: string): boolean => /[A-Z]/.test(value[0]);
 
 const UserForm = () => {
   const {
@@ -55,7 +56,10 @@ const UserForm = () => {
           >
             <label>{`${initialState.name.label}:`}</label>
             <input
-              {...register("name", initialState.name.validation)}
+              {...register("name", {
+                required: true,
+                validate: firstLetterValidator,
+              })}
               type={initialState.name.type}
             />
             {errors["name"] ? (
@@ -72,7 +76,10 @@ const UserForm = () => {
           >
             <label>{`${initialState.surname.label}:`}</label>
             <input
-              {...register("surname", initialState.surname.validation)}
+              {...register("surname", {
+                required: true,
+                validate: firstLetterValidator,
+              })}
               type={initialState.surname.type}
             />
             {errors["surname"] ? (
@@ -89,7 +96,7 @@ const UserForm = () => {
           >
             <label>{`${initialState.birthday.label}:`}</label>
             <input
-              {...register("birthday", initialState.birthday.validation)}
+              {...register("birthday", { required: true })}
               type={initialState.birthday.type}
             />
             {errors["birthday"] ? (
@@ -105,7 +112,7 @@ const UserForm = () => {
             }}
           >
             <label>{`${initialState.country.label}:`}</label>
-            <select {...register("country", initialState.country.validation)}>
+            <select {...register("country", { required: true })}>
               {initialState.country.options.map(
                 (label: CountryEnum, index: number) => {
                   return (
@@ -132,7 +139,7 @@ const UserForm = () => {
             {initialState.gender.label.map((item: string, idx: number) => (
               <div key={`${Math.random()}idx`}>
                 <input
-                  {...register("gender", initialState.gender.validation)}
+                  {...register("gender", { required: true })}
                   type={initialState.gender.type}
                   id={initialState.gender.label[idx]}
                   value={initialState.gender.label[idx]}
@@ -156,7 +163,7 @@ const UserForm = () => {
           >
             <label>{`${initialState.married.label}:`}</label>
             <input
-              {...register("married", initialState.married.validation)}
+              {...register("married", { required: true })}
               type={initialState.married.type}
             />
             {errors["married"] ? (
@@ -172,12 +179,9 @@ const UserForm = () => {
             }}
           >
             <label>{`${initialState.photo.label}:`}</label>
-            <input
-              type="file"
-              {...register("photo", initialState.photo.validation)}
-            />
+            <input type="file" {...register("photo", { required: true })} />
             {errors["photo"] ? (
-              <div>{initialState.married.errorMessage || ""}</div>
+              <div>{initialState.photo.errorMessage || ""}</div>
             ) : null}
           </div>
 
