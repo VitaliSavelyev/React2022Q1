@@ -1,4 +1,3 @@
-import React from "react";
 import { GenderEnum } from "../enums/gender.enum";
 import { CountryEnum } from "../enums/country.enum";
 
@@ -28,7 +27,7 @@ export interface ValidationControl {
 }
 
 export interface CustomValidate {
-  firstLetter?: (type: string) => boolean
+  firstLetter?: (type: string) => boolean;
 }
 
 export interface IForm {

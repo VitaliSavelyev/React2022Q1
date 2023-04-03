@@ -13,9 +13,9 @@ const Navigation = () => {
         justifyContent: "space-around",
       }}
     >
-        {listLinks.map((link: ILink) => (
-            <NavLink
-                key={link.to}
+      {listLinks.map((link: ILink) => (
+        <NavLink
+          key={link.to}
           to={link.to}
           style={({ isActive }) => {
             return {
@@ -23,9 +23,9 @@ const Navigation = () => {
             };
           }}
         >
-                {link.link}
-                </NavLink>
-        ))}
+          {link.link}
+        </NavLink>
+      ))}
     </ul>
   );
 };

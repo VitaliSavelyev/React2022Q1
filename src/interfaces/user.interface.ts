@@ -1,7 +1,7 @@
 import { CountryEnum } from "../enums/country.enum";
 import { GenderEnum } from "../enums/gender.enum";
 
-export interface IUserForm{
+export interface IUserForm {
   name: string;
   surname: string;
   birthday: string;
@@ -11,7 +11,7 @@ export interface IUserForm{
   photo: File;
 }
 
-export interface IUser{
+export interface IUser {
   id: string;
   name: string;
   surname: string;

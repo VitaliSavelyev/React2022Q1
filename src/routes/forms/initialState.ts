@@ -11,7 +11,7 @@ export const initialState: IForm = {
       required: true,
       validate: {
         firstLetter: firstLetterValidator,
-      }
+      },
     },
     errorMessage: "Your name invalid",
     valid: true,
@@ -23,9 +23,9 @@ export const initialState: IForm = {
       required: true,
       validate: {
         firstLetter: firstLetterValidator,
-      }
+      },
     },
-    errorMessage: "Your name invalid",
+    errorMessage: "Your surname invalid",
     valid: true,
   },
   birthday: {
