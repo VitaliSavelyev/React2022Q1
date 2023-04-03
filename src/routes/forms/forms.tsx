@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { IUser } from "../../interfaces/user.interface";
-import { CountryEnum } from "../../enums/country.enum";
-import { users } from "../../db/dbusers";
-import Card from "../home/Card/card";
-import { initialState } from "./initialState";
-import { FieldValues, useForm } from "react-hook-form";
+import React, { useState } from 'react';
+import { IUser } from '../../interfaces/user.interface';
+import { CountryEnum } from '../../enums/country.enum';
+import { users } from '../../db/dbusers';
+import Card from '../home/Card/card';
+import { initialState } from './initialState';
+import { FieldValues, useForm } from 'react-hook-form';
 const firstLetterValidator = (value: string): boolean => /[A-Z]/.test(value[0]);
 
 const UserForm = () => {
@@ -14,8 +14,8 @@ const UserForm = () => {
     register,
     formState: { errors },
   } = useForm({
-    mode: "onSubmit",
-    reValidateMode: "onSubmit",
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
   const onSubmit = (formState: FieldValues) => {
     const user: IUser = {
@@ -41,105 +41,95 @@ const UserForm = () => {
     <div>
       <div
         style={{
-          padding: "20px",
-          border: "1px solid red",
+          padding: '20px',
+          border: '1px solid red',
         }}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              width: "250px",
-              margin: "30px",
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '250px',
+              margin: '30px',
             }}
           >
             <label>{`${initialState.name.label}:`}</label>
             <input
-              {...register("name", {
+              {...register('name', {
                 required: true,
                 validate: firstLetterValidator,
               })}
               type={initialState.name.type}
             />
-            {errors["name"] ? (
-              <div>{initialState.name.errorMessage || ""}</div>
-            ) : null}
+            {errors['name'] ? <div>{initialState.name.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              width: "250px",
-              margin: "30px",
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '250px',
+              margin: '30px',
             }}
           >
             <label>{`${initialState.surname.label}:`}</label>
             <input
-              {...register("surname", {
+              {...register('surname', {
                 required: true,
                 validate: firstLetterValidator,
               })}
               type={initialState.surname.type}
             />
-            {errors["surname"] ? (
-              <div>{initialState.surname.errorMessage || ""}</div>
-            ) : null}
+            {errors['surname'] ? <div>{initialState.surname.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              width: "250px",
-              margin: "30px",
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '250px',
+              margin: '30px',
             }}
           >
             <label>{`${initialState.birthday.label}:`}</label>
             <input
-              {...register("birthday", { required: true })}
+              {...register('birthday', { required: true })}
               type={initialState.birthday.type}
             />
-            {errors["birthday"] ? (
-              <div>{initialState.birthday.errorMessage || ""}</div>
-            ) : null}
+            {errors['birthday'] ? <div>{initialState.birthday.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              width: "250px",
-              margin: "30px",
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '250px',
+              margin: '30px',
             }}
           >
             <label>{`${initialState.country.label}:`}</label>
-            <select {...register("country", { required: true })}>
-              {initialState.country.options.map(
-                (label: CountryEnum, index: number) => {
-                  return (
-                    <option value={label} key={label + index}>
-                      {label}
-                    </option>
-                  );
-                }
-              )}
+            <select {...register('country', { required: true })}>
+              {initialState.country.options.map((label: CountryEnum, index: number) => {
+                return (
+                  <option value={label} key={label + index}>
+                    {label}
+                  </option>
+                );
+              })}
             </select>
-            {errors["country"] ? (
-              <div>{initialState.country.errorMessage || ""}</div>
-            ) : null}
+            {errors['country'] ? <div>{initialState.country.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              width: "250px",
-              margin: "30px",
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '250px',
+              margin: '30px',
             }}
           >
             <label>Gender:</label>
             {initialState.gender.label.map((item: string, idx: number) => (
               <div key={`${Math.random()}idx`}>
                 <input
-                  {...register("gender", { required: true })}
+                  {...register('gender', { required: true })}
                   type={initialState.gender.type}
                   id={initialState.gender.label[idx]}
                   value={initialState.gender.label[idx]}
@@ -149,40 +139,31 @@ const UserForm = () => {
                 </label>
               </div>
             ))}
-            {errors["gender"] ? (
-              <span>{initialState.gender.errorMessage || ""}</span>
-            ) : null}
+            {errors['gender'] ? <span>{initialState.gender.errorMessage || ''}</span> : null}
           </div>
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              width: "250px",
-              margin: "30px",
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '250px',
+              margin: '30px',
             }}
           >
             <label>{`${initialState.married.label}:`}</label>
-            <input
-              {...register("married", { required: true })}
-              type={initialState.married.type}
-            />
-            {errors["married"] ? (
-              <div>{initialState.married.errorMessage || ""}</div>
-            ) : null}
+            <input {...register('married', { required: true })} type={initialState.married.type} />
+            {errors['married'] ? <div>{initialState.married.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
-              width: "250px",
-              margin: "30px",
+              display: 'flex',
+              flexWrap: 'wrap',
+              width: '250px',
+              margin: '30px',
             }}
           >
             <label>{`${initialState.photo.label}:`}</label>
-            <input type="file" {...register("photo", { required: true })} />
-            {errors["photo"] ? (
-              <div>{initialState.photo.errorMessage || ""}</div>
-            ) : null}
+            <input type="file" {...register('photo', { required: true })} />
+            {errors['photo'] ? <div>{initialState.photo.errorMessage || ''}</div> : null}
           </div>
 
           <button type="submit">Submit</button>
@@ -190,7 +171,7 @@ const UserForm = () => {
         {isHasPopUp ? (
           <h2
             style={{
-              border: "2px solid green",
+              border: '2px solid green',
             }}
           >
             Card was created
@@ -199,11 +180,11 @@ const UserForm = () => {
       </div>
       <div
         style={{
-          display: "flex",
-          padding: "20px",
-          gap: "10px",
-          flexWrap: "wrap",
-          border: "1px solid red",
+          display: 'flex',
+          padding: '20px',
+          gap: '10px',
+          flexWrap: 'wrap',
+          border: '1px solid red',
         }}
       >
         {users.map((card: IUser) => (

@@ -1,5 +1,5 @@
-import { GenderEnum } from "../enums/gender.enum";
-import { CountryEnum } from "../enums/country.enum";
+import { GenderEnum } from '../enums/gender.enum';
+import { CountryEnum } from '../enums/country.enum';
 
 interface FormControl {
   type: string;
