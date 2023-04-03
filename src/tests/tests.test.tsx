@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Routes} from 'react-router-dom';
 import About from '../routes/about/about';
+import Form from '../routes/forms/forms';
 import {beforeEach, describe, expect, test} from 'vitest';
 import Home from "../routes/home/home";
 import NotFound from "../routes/notfound/notFound";
@@ -17,7 +18,7 @@ describe('Testing routing', () => {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="/about" element={<About/>}/>
-                        <Route path="/form" element={<About/>}/>
+                        <Route path="/form" element={<Form/>}/>
                         <Route path="*" element={<NotFound/>}/>
                     </Routes>
                 </BrowserRouter>
