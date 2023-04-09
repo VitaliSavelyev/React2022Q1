@@ -1,7 +1,7 @@
 import { IUser } from 'interfaces/user.interface';
 import React from 'react';
 
-const Card = (props: { card: IUser; key: string }) => {
+const Card = (props: { card: any; key: string }) => {
   const { card } = props;
   return (
     <div
@@ -20,9 +20,9 @@ const Card = (props: { card: IUser; key: string }) => {
       <div
         style={{
           backgroundImage: `url(
-            ${card.photo}
+            ${card.image}
           )`,
-          width: '100%',
+          width: '200px',
           height: '300px',
           borderRadius: '20px',
           backgroundRepeat: 'no-repeat',
