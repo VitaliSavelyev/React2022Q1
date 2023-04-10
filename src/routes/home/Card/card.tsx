@@ -12,10 +12,8 @@ const Card = (props: { card: any; key: string }) => {
       }}
     >
       <p>{card.name}</p>
-      <p>{card.surname}</p>
-      <p>{card.birthday}</p>
-      <p>{card.country}</p>
-      <p>{card.married ? 'married' : 'not married'}</p>
+      <p>{card.species}</p>
+      <p>{card.type}</p>
       <p>{card.gender}</p>
       <div
         style={{
