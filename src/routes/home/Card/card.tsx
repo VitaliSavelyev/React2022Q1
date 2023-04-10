@@ -1,6 +1,7 @@
 import React from 'react';
+import { CharacterInterface } from '../../../interfaces/character.interface';
 
-const Card = (props: { card: any; key: string }) => {
+const Card = (props: { card: CharacterInterface }) => {
   const { card } = props;
   return (
     <div>

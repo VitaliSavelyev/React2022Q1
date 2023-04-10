@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { CharacterInterface } from '../../../interfaces/character.interface';
 
-const ModalCard = (props: { cardId: string; setShowingModal: any }) => {
+const ModalCard = (props: {
+  cardId: string;
+  setShowingModal: React.Dispatch<React.SetStateAction<string | null>>;
+}) => {
   const { cardId, setShowingModal } = props;
   const defaultUrl = `https://rickandmortyapi.com/api/character/${cardId}`;
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(true);
-  const [data, setData] = useState(null);
-  const handleClick = (e) => {
-    if (e.target.id === 'ggg') {
+  const [data, setData] = useState<CharacterInterface | null>(null);
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLDivElement;
+    if (target.id === 'overlay-modal') {
       setShowingModal(null);
     }
   };
@@ -33,11 +38,11 @@ const ModalCard = (props: { cardId: string; setShowingModal: any }) => {
           }
         });
     }, 500);
-  }, []);
+  });
   return (
     <div
-      id={'ggg'}
-      onClick={(e) => {
+      id={'overlay-modal'}
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         handleClick(e);
       }}
       style={{
@@ -58,7 +63,7 @@ const ModalCard = (props: { cardId: string; setShowingModal: any }) => {
           backgroundColor: 'white',
           border: '1px solid orange',
           width: '200px',
-          height: '400px',
+          height: '450px',
         }}
       >
         {error && <div>{error}</div>}

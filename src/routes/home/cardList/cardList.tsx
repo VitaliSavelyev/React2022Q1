@@ -1,7 +1,11 @@
 import React from 'react';
 import Card from '../Card/card';
+import { CharacterInterface } from '../../../interfaces/character.interface';
 
-const CardList = (props: { data: any; setShowingModal: any }) => {
+const CardList = (props: {
+  data: CharacterInterface[];
+  setShowingModal: React.Dispatch<React.SetStateAction<string | null>>;
+}) => {
   const { data, setShowingModal } = props;
   const handleClick = (cardId: string): void => {
     setShowingModal(cardId);
@@ -17,10 +21,10 @@ const CardList = (props: { data: any; setShowingModal: any }) => {
           border: '1px solid red',
         }}
       >
-        {data.map((card: any) => (
+        {data.map((card: CharacterInterface) => (
           <div key={Math.random()}>
             <div onClick={() => handleClick(card.id)}>
-              <Card key={card.id} card={card} />
+              <Card card={card} />
             </div>
           </div>
         ))}

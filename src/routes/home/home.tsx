@@ -3,16 +3,16 @@ import SearchBar from './search/search';
 import CardList from './cardList/cardList';
 import { createPortal } from 'react-dom';
 import ModalCard from './modalCard/modalCard';
-
+import { CharacterInterface } from '../../interfaces/character.interface';
+const defaultUrl = `https://rickandmortyapi.com/api/character`;
 const Home = () => {
   const storageValue = localStorage.getItem('inputValue');
-  const defaultUrl = `https://rickandmortyapi.com/api/character`;
   const [inputValue, setInputValue] = useState(storageValue ? JSON.parse(storageValue) : '');
   const [urlValue, setUrlValue] = useState(defaultUrl);
   const [error, setError] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const [data, setData] = useState([]);
-  const [isShowingModal, setShowingModal] = useState(null);
+  const [data, setData] = useState<CharacterInterface[]>([]);
+  const [isShowingModal, setShowingModal] = useState<null | string>(null);
   useEffect(() => {
     if (inputValue) {
       setUrlValue(defaultUrl + `?name=${inputValue}`);

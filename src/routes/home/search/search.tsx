@@ -1,6 +1,9 @@
 import React from 'react';
 
-const SearchBar = (props: { inputValue: string; setInputValue: any }) => {
+const SearchBar = (props: {
+  inputValue: string;
+  setInputValue: React.Dispatch<React.SetStateAction<string>>;
+}) => {
   const { inputValue, setInputValue } = props;
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
