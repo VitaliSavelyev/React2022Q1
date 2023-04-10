@@ -8,6 +8,7 @@ const SearchBar = (props: {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
       const target = event.target as HTMLInputElement;
+      localStorage.setItem('inputValue', JSON.stringify(target.value));
       setInputValue(target.value);
     }
   };
