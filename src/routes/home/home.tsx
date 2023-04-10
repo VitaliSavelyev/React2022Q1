@@ -18,8 +18,9 @@ const Home = () => {
         }
     }, [inputValue]);
     useEffect(() => {
+        setIsPending(true);
+        setError(null);
         setTimeout(() => {
-            console.log(urlValue)
             fetch(urlValue)
                 .then(res => {
                     if (!res.ok) {
@@ -56,7 +57,7 @@ const Home = () => {
       >
           { error && <div>{ error }</div> }
           { isPending && <div>Loading...</div> }
-          {data ? <CardList data={data} /> : null}
+          {!error && !isPending && data ? <CardList data={data} /> : null}
       </div>
     </main>
   );
