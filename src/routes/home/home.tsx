@@ -7,10 +7,12 @@ import { CharacterInterface } from '../../interfaces/character.interface';
 const defaultUrl = `https://rickandmortyapi.com/api/character`;
 const Home = () => {
   const storageValue = localStorage.getItem('inputValue');
-  const [inputValue, setInputValue] = useState<string>(storageValue ? JSON.parse(storageValue) : '');
+  const [inputValue, setInputValue] = useState<string>(
+    storageValue ? JSON.parse(storageValue) : ''
+  );
   const [urlValue, setUrlValue] = useState<string>(defaultUrl);
   const [error, setError] = useState<string | null>(null);
-  const [isPending, setIsPending] = useState<Boolean>(false);
+  const [isPending, setIsPending] = useState<boolean>(false);
   const [data, setData] = useState<CharacterInterface[]>([]);
   const [isShowingModal, setShowingModal] = useState<null | string>(null);
   useEffect(() => {

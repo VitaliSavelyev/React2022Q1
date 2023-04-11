@@ -17,27 +17,25 @@ const ModalCard = (props: {
     }
   };
   useEffect(() => {
-    setTimeout(() => {
-      fetch(defaultUrl)
-        .then((res) => {
-          if (!res.ok) {
-            throw Error('could not fetch the data for that resource');
-          }
-          return res.json();
-        })
-        .then((data) => {
+    fetch(defaultUrl)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error('could not fetch the data for that resource');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setIsPending(false);
+        setData(data);
+        setError(null);
+      })
+      .catch((err) => {
+        if (err.name === 'AbortError') {
+        } else {
           setIsPending(false);
-          setData(data);
-          setError(null);
-        })
-        .catch((err) => {
-          if (err.name === 'AbortError') {
-          } else {
-            setIsPending(false);
-            setError(err.message);
-          }
-        });
-    }, 500);
+          setError(err.message);
+        }
+      });
   });
   return (
     <div
