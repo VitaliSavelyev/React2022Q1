@@ -1,14 +1,14 @@
 import React from 'react';
 import Card from '../Card/card';
 import { CharacterInterface } from '../../../interfaces/character.interface';
+import {useDispatch, useSelector} from "react-redux";
+import {setModalWindow} from "../../../store/homeSlice";
 
-const CardList = (props: {
-  data: CharacterInterface[];
-  setShowingModal: React.Dispatch<React.SetStateAction<string | null>>;
-}) => {
-  const { data, setShowingModal } = props;
+const CardList = () => {
+    const storeData = useSelector(state => state.home.cards);
+    const dispatch = useDispatch();
   const handleClick = (cardId: string): void => {
-    setShowingModal(cardId);
+      dispatch(setModalWindow({cardId}))
   };
   return (
     <div>
@@ -21,7 +21,7 @@ const CardList = (props: {
           border: '1px solid red',
         }}
       >
-        {data.map((card: CharacterInterface) => (
+        {storeData.map((card: CharacterInterface) => (
           <div key={Math.random()}>
             <div onClick={() => handleClick(card.id)}>
               <Card card={card} />

@@ -47,13 +47,13 @@ export const initialState: IForm = {
     errorMessage: 'Your country does not choose',
     valid: true,
   },
-  married: {
+  status: {
     type: 'checkbox',
-    label: 'I am married',
+    label: 'Are you alive',
     validation: {
       required: true,
     },
-    errorMessage: 'Sorry, but you married',
+    errorMessage: 'Sorry, but you alive',
     valid: true,
   },
   gender: {

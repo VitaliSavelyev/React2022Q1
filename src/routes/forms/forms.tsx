@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { IUser } from '../../interfaces/user.interface';
+import React from 'react';
 import { CountryEnum } from '../../enums/country.enum';
-import { users } from '../../db/dbusers';
 import Card from '../home/Card/card';
 import { initialState } from './initialState';
 import { FieldValues, useForm } from 'react-hook-form';
+import {useDispatch, useSelector} from "react-redux";
+import {addCard, hidePopup} from "../../store/formSlice";
+import {CharacterInterface} from "../../interfaces/character.interface";
 const firstLetterValidator = (value: string): boolean => /[A-Z]/.test(value[0]);
 
 const UserForm = () => {
@@ -17,26 +18,27 @@ const UserForm = () => {
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
   });
+    const data = useSelector(state => state.form.cards)
+    const isShowPopup = useSelector(state => state.form.isShowPopup)
+    const dispatch = useDispatch();
   const onSubmit = (formState: FieldValues) => {
-    const user: IUser = {
+    const character: CharacterInterface = {
       birthday: formState.birthday,
-      country: formState.country,
+      location: formState.country,
       gender: formState.gender,
       id: `${Math.random() * 10000}`,
-      married: formState.married,
-      name: formState.name,
-      photo: URL.createObjectURL(formState.photo[0]),
-      surname: formState.surname,
+      status: formState.status,
+      name: formState.name + ' ' + formState.surname,
+      image: URL.createObjectURL(formState.photo[0]),
+        species: 'Human',
+        type: ''
     };
-    users.push(user);
-    setIsHasPopup(true);
+    dispatch(addCard({character}))
     reset();
     setTimeout(() => {
-      setIsHasPopup(false);
+      dispatch(hidePopup())
     }, 3000);
   };
-  const [isHasPopUp, setIsHasPopup] = useState(false);
-
   return (
     <div>
       <div
@@ -62,7 +64,7 @@ const UserForm = () => {
               })}
               type={initialState.name.type}
             />
-            {errors['name'] ? <div>{initialState.name.errorMessage || ''}</div> : null}
+            {errors['name'] ? <div style={{color: "red"}}>{initialState.name.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
@@ -80,7 +82,7 @@ const UserForm = () => {
               })}
               type={initialState.surname.type}
             />
-            {errors['surname'] ? <div>{initialState.surname.errorMessage || ''}</div> : null}
+            {errors['surname'] ? <div style={{color: "red"}}>{initialState.surname.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
@@ -95,7 +97,7 @@ const UserForm = () => {
               {...register('birthday', { required: true })}
               type={initialState.birthday.type}
             />
-            {errors['birthday'] ? <div>{initialState.birthday.errorMessage || ''}</div> : null}
+            {errors['birthday'] ? <div style={{color: "red"}}>{initialState.birthday.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
@@ -115,7 +117,7 @@ const UserForm = () => {
                 );
               })}
             </select>
-            {errors['country'] ? <div>{initialState.country.errorMessage || ''}</div> : null}
+            {errors['country'] ? <div style={{color: "red"}}>{initialState.country.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
@@ -139,7 +141,7 @@ const UserForm = () => {
                 </label>
               </div>
             ))}
-            {errors['gender'] ? <span>{initialState.gender.errorMessage || ''}</span> : null}
+            {errors['gender'] ? <span style={{color: "red"}}>{initialState.gender.errorMessage || ''}</span> : null}
           </div>
           <div
             style={{
@@ -149,9 +151,9 @@ const UserForm = () => {
               margin: '30px',
             }}
           >
-            <label>{`${initialState.married.label}:`}</label>
-            <input {...register('married', { required: true })} type={initialState.married.type} />
-            {errors['married'] ? <div>{initialState.married.errorMessage || ''}</div> : null}
+            <label>{`${initialState.status.label}:`}</label>
+            <input {...register('status', { required: true })} type={initialState.status.type} />
+            {errors['status'] ? <div style={{color: "red"}}>{initialState.status.errorMessage || ''}</div> : null}
           </div>
           <div
             style={{
@@ -163,12 +165,12 @@ const UserForm = () => {
           >
             <label>{`${initialState.photo.label}:`}</label>
             <input type="file" {...register('photo', { required: true })} />
-            {errors['photo'] ? <div>{initialState.photo.errorMessage || ''}</div> : null}
+            {errors['photo'] ? <div style={{color: "red"}}>{initialState.photo.errorMessage || ''}</div> : null}
           </div>
 
           <button type="submit">Submit</button>
         </form>
-        {isHasPopUp ? (
+        {isShowPopup ? (
           <h2
             style={{
               border: '2px solid green',
@@ -187,7 +189,7 @@ const UserForm = () => {
           border: '1px solid red',
         }}
       >
-        {users.map((card: IUser) => (
+        {data.map((card: CharacterInterface) => (
           <Card key={card.id} card={card} />
         ))}
       </div>

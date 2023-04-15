@@ -1,42 +1,38 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect} from 'react';
 import { CharacterInterface } from '../../../interfaces/character.interface';
+import {useDispatch, useSelector} from "react-redux";
+import {defaultUrl, getDataById, getDataByIdError, getDataByIdSuccess, setModalWindow} from "../../../store/homeSlice";
 
-const ModalCard = (props: {
-  cardId: string;
-  setShowingModal: React.Dispatch<React.SetStateAction<string | null>>;
-}) => {
-  const { cardId, setShowingModal } = props;
-  const defaultUrl = `https://rickandmortyapi.com/api/character/${cardId}`;
-  const [error, setError] = useState(null);
-  const [isPending, setIsPending] = useState(true);
-  const [data, setData] = useState<CharacterInterface | null>(null);
+const ModalCard = () => {
+    const cardIdModal = useSelector(state => state.home.cardIdModal);
+    const cardError = useSelector(state => state.home.cardError);
+    const isPendingCard = useSelector(state => state.home.isPendingCard)
+    const card = useSelector(state => state.home.card)
+  const dispatch = useDispatch();
+    useEffect(() => {
+        getDataById()
+        fetch(defaultUrl + '/' + cardIdModal)
+
+            .then((res) => {
+                if (!res.ok) {
+                    throw Error('could not fetch the data for that resource');
+                }
+                return res.json();
+            })
+            .then((data) => {
+                dispatch(getDataByIdSuccess({data}))
+            })
+            .catch((err) => {
+                dispatch(getDataByIdError({error: err}))
+            });
+    },[])
+
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
     if (target.id === 'overlay-modal') {
-      setShowingModal(null);
+      dispatch(setModalWindow({cardId: null}))
     }
   };
-  useEffect(() => {
-    fetch(defaultUrl)
-      .then((res) => {
-        if (!res.ok) {
-          throw Error('could not fetch the data for that resource');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setIsPending(false);
-        setData(data);
-        setError(null);
-      })
-      .catch((err) => {
-        if (err.name === 'AbortError') {
-        } else {
-          setIsPending(false);
-          setError(err.message);
-        }
-      });
-  });
   return (
     <div
       id={'overlay-modal'}
@@ -61,21 +57,22 @@ const ModalCard = (props: {
           backgroundColor: 'white',
           border: '1px solid orange',
           width: '200px',
-          height: '450px',
+          height: '480px',
         }}
       >
-        {error && <div>{error}</div>}
-        {isPending && <div>Loading...</div>}
-        {!error && !isPending && data ? (
+        {cardError && <div>{cardError}</div>}
+        {isPendingCard && <div>Loading...</div>}
+        {!cardError && !isPendingCard && card ? (
           <div>
-            <p>{data.name}</p>
-            <p>{data.species}</p>
-            <p>{data.type}</p>
-            <p>{data.gender}</p>
+            <p>Name: {card.name}</p>
+            <p>Specie: {card.species}</p>
+            <p>Type: {card.type}</p>
+            <p>Gender: {card.gender}</p>
+              <p>Status: {card.status}</p>
             <div
               style={{
                 backgroundImage: `url(
-            ${data.image}
+            ${card.image}
           )`,
                 width: '200px',
                 height: '300px',

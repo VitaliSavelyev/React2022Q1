@@ -5,10 +5,9 @@ export interface CharacterInterface {
   type: string;
   status: string;
   gender: string;
-  episode: [string];
   image: string;
-  url: string;
-  created: Date;
+  birthday: string,
+  location: string,
 }
 export interface DataInterface {
   results: CharacterInterface[];

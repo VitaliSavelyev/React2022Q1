@@ -35,7 +35,7 @@ export interface IForm {
   surname: FormControlInput;
   birthday: FormControlInput;
   country: FormControlSelect;
-  married: FormControlInput;
+  status: FormControlInput;
   gender: FormControlRadio;
   photo: FormControlInput;
 }
