@@ -1,14 +1,15 @@
 import React from 'react';
 import Card from '../Card/card';
 import { CharacterInterface } from '../../../interfaces/character.interface';
-import {useDispatch, useSelector} from "react-redux";
-import {setModalWindow} from "../../../store/homeSlice";
+import { useDispatch } from 'react-redux';
+import { setModalWindow } from '../../../store/homeSlice';
+import { useAppSelector } from '../../../store';
 
 const CardList = () => {
-    const storeData = useSelector(state => state.home.cards);
-    const dispatch = useDispatch();
+  const storeData: CharacterInterface[] = useAppSelector((state) => state.home.cards);
+  const dispatch = useDispatch();
   const handleClick = (cardId: string): void => {
-      dispatch(setModalWindow({cardId}))
+    dispatch(setModalWindow({ cardId }));
   };
   return (
     <div>

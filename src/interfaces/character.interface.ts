@@ -6,8 +6,8 @@ export interface CharacterInterface {
   status: string;
   gender: string;
   image: string;
-  birthday: string,
-  location: string,
+  birthday: string;
+  location: string;
 }
 export interface DataInterface {
   results: CharacterInterface[];

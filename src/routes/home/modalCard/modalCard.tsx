@@ -1,36 +1,23 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, useAppSelector } from '../../../store';
+import { defaultUrl, fetchDataById, setModalWindow } from '../../../store/homeSlice';
 import { CharacterInterface } from '../../../interfaces/character.interface';
-import {useDispatch, useSelector} from "react-redux";
-import {defaultUrl, getDataById, getDataByIdError, getDataByIdSuccess, setModalWindow} from "../../../store/homeSlice";
 
 const ModalCard = () => {
-    const cardIdModal = useSelector(state => state.home.cardIdModal);
-    const cardError = useSelector(state => state.home.cardError);
-    const isPendingCard = useSelector(state => state.home.isPendingCard)
-    const card = useSelector(state => state.home.card)
-  const dispatch = useDispatch();
-    useEffect(() => {
-        getDataById()
-        fetch(defaultUrl + '/' + cardIdModal)
-
-            .then((res) => {
-                if (!res.ok) {
-                    throw Error('could not fetch the data for that resource');
-                }
-                return res.json();
-            })
-            .then((data) => {
-                dispatch(getDataByIdSuccess({data}))
-            })
-            .catch((err) => {
-                dispatch(getDataByIdError({error: err}))
-            });
-    },[])
+  const cardIdModal: string | null = useAppSelector((state) => state.home.cardIdModal);
+  const cardError: string = useAppSelector((state) => state.home.cardError);
+  const isPendingCard: boolean = useAppSelector((state) => state.home.isPendingCard);
+  const card: CharacterInterface | null = useAppSelector((state) => state.home.card);
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchDataById(defaultUrl + `/${cardIdModal}`));
+  }, [dispatch, cardIdModal]);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
     if (target.id === 'overlay-modal') {
-      dispatch(setModalWindow({cardId: null}))
+      dispatch(setModalWindow({ cardId: null }));
     }
   };
   return (
@@ -68,14 +55,14 @@ const ModalCard = () => {
             <p>Specie: {card.species}</p>
             <p>Type: {card.type}</p>
             <p>Gender: {card.gender}</p>
-              <p>Status: {card.status}</p>
+            <p>Status: {card.status}</p>
             <div
               style={{
                 backgroundImage: `url(
             ${card.image}
           )`,
                 width: '200px',
-                height: '300px',
+                height: '270px',
                 borderRadius: '20px',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',

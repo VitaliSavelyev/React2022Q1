@@ -15,7 +15,7 @@ const Card = (props: { card: CharacterInterface }) => {
         <p>{card.name}</p>
         <p>{card.species}</p>
         <p>{card.gender}</p>
-          {card?.birthday && <p>{card.birthday}</p>}
+        {card?.birthday && <p>{card.birthday}</p>}
         <div
           style={{
             backgroundImage: `url(

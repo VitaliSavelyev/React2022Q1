@@ -3,9 +3,10 @@ import { CountryEnum } from '../../enums/country.enum';
 import Card from '../home/Card/card';
 import { initialState } from './initialState';
 import { FieldValues, useForm } from 'react-hook-form';
-import {useDispatch, useSelector} from "react-redux";
-import {addCard, hidePopup} from "../../store/formSlice";
-import {CharacterInterface} from "../../interfaces/character.interface";
+import { useDispatch } from 'react-redux';
+import { addCard, hidePopup } from '../../store/formSlice';
+import { CharacterInterface } from '../../interfaces/character.interface';
+import { useAppSelector } from '../../store';
 const firstLetterValidator = (value: string): boolean => /[A-Z]/.test(value[0]);
 
 const UserForm = () => {
@@ -18,9 +19,9 @@ const UserForm = () => {
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
   });
-    const data = useSelector(state => state.form.cards)
-    const isShowPopup = useSelector(state => state.form.isShowPopup)
-    const dispatch = useDispatch();
+  const data: CharacterInterface[] = useAppSelector((state) => state.form.cards);
+  const isShowPopup: boolean = useAppSelector((state) => state.form.isShowPopup);
+  const dispatch = useDispatch();
   const onSubmit = (formState: FieldValues) => {
     const character: CharacterInterface = {
       birthday: formState.birthday,
@@ -30,13 +31,13 @@ const UserForm = () => {
       status: formState.status,
       name: formState.name + ' ' + formState.surname,
       image: URL.createObjectURL(formState.photo[0]),
-        species: 'Human',
-        type: ''
+      species: 'Human',
+      type: '',
     };
-    dispatch(addCard({character}))
+    dispatch(addCard({ character }));
     reset();
     setTimeout(() => {
-      dispatch(hidePopup())
+      dispatch(hidePopup());
     }, 3000);
   };
   return (
@@ -64,7 +65,9 @@ const UserForm = () => {
               })}
               type={initialState.name.type}
             />
-            {errors['name'] ? <div style={{color: "red"}}>{initialState.name.errorMessage || ''}</div> : null}
+            {errors['name'] ? (
+              <div style={{ color: 'red' }}>{initialState.name.errorMessage || ''}</div>
+            ) : null}
           </div>
           <div
             style={{
@@ -82,7 +85,9 @@ const UserForm = () => {
               })}
               type={initialState.surname.type}
             />
-            {errors['surname'] ? <div style={{color: "red"}}>{initialState.surname.errorMessage || ''}</div> : null}
+            {errors['surname'] ? (
+              <div style={{ color: 'red' }}>{initialState.surname.errorMessage || ''}</div>
+            ) : null}
           </div>
           <div
             style={{
@@ -97,7 +102,9 @@ const UserForm = () => {
               {...register('birthday', { required: true })}
               type={initialState.birthday.type}
             />
-            {errors['birthday'] ? <div style={{color: "red"}}>{initialState.birthday.errorMessage || ''}</div> : null}
+            {errors['birthday'] ? (
+              <div style={{ color: 'red' }}>{initialState.birthday.errorMessage || ''}</div>
+            ) : null}
           </div>
           <div
             style={{
@@ -117,7 +124,9 @@ const UserForm = () => {
                 );
               })}
             </select>
-            {errors['country'] ? <div style={{color: "red"}}>{initialState.country.errorMessage || ''}</div> : null}
+            {errors['country'] ? (
+              <div style={{ color: 'red' }}>{initialState.country.errorMessage || ''}</div>
+            ) : null}
           </div>
           <div
             style={{
@@ -141,7 +150,9 @@ const UserForm = () => {
                 </label>
               </div>
             ))}
-            {errors['gender'] ? <span style={{color: "red"}}>{initialState.gender.errorMessage || ''}</span> : null}
+            {errors['gender'] ? (
+              <span style={{ color: 'red' }}>{initialState.gender.errorMessage || ''}</span>
+            ) : null}
           </div>
           <div
             style={{
@@ -153,7 +164,9 @@ const UserForm = () => {
           >
             <label>{`${initialState.status.label}:`}</label>
             <input {...register('status', { required: true })} type={initialState.status.type} />
-            {errors['status'] ? <div style={{color: "red"}}>{initialState.status.errorMessage || ''}</div> : null}
+            {errors['status'] ? (
+              <div style={{ color: 'red' }}>{initialState.status.errorMessage || ''}</div>
+            ) : null}
           </div>
           <div
             style={{
@@ -165,7 +178,9 @@ const UserForm = () => {
           >
             <label>{`${initialState.photo.label}:`}</label>
             <input type="file" {...register('photo', { required: true })} />
-            {errors['photo'] ? <div style={{color: "red"}}>{initialState.photo.errorMessage || ''}</div> : null}
+            {errors['photo'] ? (
+              <div style={{ color: 'red' }}>{initialState.photo.errorMessage || ''}</div>
+            ) : null}
           </div>
 
           <button type="submit">Submit</button>
