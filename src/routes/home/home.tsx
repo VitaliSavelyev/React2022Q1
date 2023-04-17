@@ -9,13 +9,16 @@ import { AppDispatch, useAppSelector } from '../../store';
 
 const Home = () => {
   const urlValue: string = useAppSelector((state) => state.home.url);
+  const cashUrlValue: string = useAppSelector((state) => state.home.cashUrl);
   const errorCards: string = useAppSelector((state) => state.home.errorCards);
   const isPending: boolean = useAppSelector((state) => state.home.isPending);
   const cardIdModal: string | null = useAppSelector((state) => state.home.cardIdModal);
   const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    dispatch(fetchData(urlValue));
-  }, [urlValue, dispatch]);
+    if (urlValue !== cashUrlValue) {
+      dispatch(fetchData(urlValue));
+    }
+  }, [urlValue, dispatch, cashUrlValue]);
   return (
     <main data-testid="home">
       <SearchBar />

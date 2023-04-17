@@ -5,6 +5,7 @@ export const defaultUrl = 'https://rickandmortyapi.com/api/character';
 interface IHomeState {
   searchInput: string;
   url: string;
+  cashUrl: string;
   errorCards: string;
   isPending: boolean;
   cards: CharacterInterface[];
@@ -17,6 +18,7 @@ interface IHomeState {
 const initialState: IHomeState = {
   searchInput: '',
   url: defaultUrl,
+  cashUrl: '',
   errorCards: '',
   isPending: false,
   cards: [],
@@ -54,7 +56,6 @@ export const fetchDataById = createAsyncThunk(
       if (!response.ok) {
         throw new Error('Server Error!');
       }
-      console.log();
       return await response.json();
     } catch (error) {
       return rejectWithValue(error);
@@ -85,6 +86,7 @@ const homeSlice = createSlice({
     builder.addCase(fetchData.pending, (state) => {
       state.isPending = true;
       state.errorCards = '';
+      state.cashUrl = state.url;
     });
     builder.addCase(fetchData.fulfilled, (state, action) => {
       state.isPending = false;
