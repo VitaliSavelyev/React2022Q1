@@ -4,7 +4,7 @@ import { CharacterInterface } from '../../../interfaces/character.interface';
 const Card = (props: { card: CharacterInterface }) => {
   const { card } = props;
   return (
-    <div>
+    <div data-testid="card">
       <div
         style={{
           padding: '20px',

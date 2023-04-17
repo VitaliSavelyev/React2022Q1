@@ -22,6 +22,7 @@ const ModalCard = () => {
   };
   return (
     <div
+        data-testid="modal"
       id={'overlay-modal'}
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         handleClick(e);

@@ -9,6 +9,3 @@ export interface CharacterInterface {
   birthday: string;
   location: string;
 }
-export interface DataInterface {
-  results: CharacterInterface[];
-}
