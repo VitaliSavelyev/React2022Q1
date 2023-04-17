@@ -7,4 +7,7 @@ export default defineConfig(() => ({
     globals: true,
     environment: 'jsdom',
   },
+  coverage: {
+    exclude: ['src/store/**']
+  }
 }));
