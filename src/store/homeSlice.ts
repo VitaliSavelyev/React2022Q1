@@ -101,7 +101,6 @@ const homeSlice = createSlice({
       state.cardError = '';
     });
     builder.addCase(fetchDataById.fulfilled, (state, action) => {
-      console.log(2, action);
       state.isPendingCard = false;
       state.card = action.payload;
     });
