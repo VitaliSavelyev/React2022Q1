@@ -6,56 +6,56 @@ import path from 'node:path';
 import 'whatwg-fetch';
 
 async function createServer() {
-    try {
-        const PORT = 5555;
-        const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  try {
+    const PORT = 5555;
+    const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-        const app: Application = express();
+    const app: Application = express();
 
-        const vite = await createViteServer({
-            server: { middlewareMode: true },
-            appType: 'custom',
-        });
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      appType: 'custom',
+    });
 
-        app.use(vite.middlewares);
+    app.use(vite.middlewares);
 
-        app.use('*', async (req: Request, res: Response) => {
-            const { originalUrl } = req;
+    app.use('*', async (req: Request, res: Response) => {
+      const { originalUrl } = req;
 
-            let html = await readFile(path.resolve(__dirname, '../index.html'), 'utf8');
-            html = await vite.transformIndexHtml(originalUrl, html);
+      let html = await readFile(path.resolve(__dirname, '../index.html'), 'utf8');
+      html = await vite.transformIndexHtml(originalUrl, html);
 
-            const parts = html.split('<!--ssr-->');
+      const parts = html.split('<!--ssr-->');
 
-            const [firstPart, lastPart] = parts;
+      const [firstPart, lastPart] = parts;
 
-            const { render } = await vite.ssrLoadModule('./src/entry-server.tsx');
+      const { render } = await vite.ssrLoadModule('./src/entry-server.tsx');
 
-            const { pipe } = render(
-                {
-                    onShellReady() {
-                        res.write(firstPart);
-                        pipe(res);
-                    },
+      const { pipe } = render(
+        {
+          onShellReady() {
+            res.write(firstPart);
+            pipe(res);
+          },
 
-                    onShellError(error: Error) {
-                        console.error(error);
-                    },
+          onShellError(error: Error) {
+            console.error(error);
+          },
 
-                    onAllReady() {
-                        res.status(200).end(lastPart);
-                    },
+          onAllReady() {
+            res.status(200).end(lastPart);
+          },
 
-                    onError(error: Error) {
-                        console.error(error);
-                    },
-                },
-                originalUrl
-            );
-        });
+          onError(error: Error) {
+            console.error(error);
+          },
+        },
+        originalUrl
+      );
+    });
 
-        app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
-    } catch (error: unknown) {}
+    app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+  } catch (error: unknown) {}
 }
 
 createServer().then();
